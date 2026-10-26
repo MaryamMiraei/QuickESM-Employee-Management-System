@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import LoginCover from "../components/LoginCover";
 import Link from "next/link";
 
