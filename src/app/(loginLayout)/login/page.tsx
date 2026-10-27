@@ -1,5 +1,5 @@
 "use client";
-import LoginCover from "../components/LoginCover";
+import LoginCover from "./components/LoginCover";
 import Link from "next/link";
 
 const LoginPage = () => {
