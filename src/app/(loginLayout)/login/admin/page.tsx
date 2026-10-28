@@ -6,7 +6,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { signin } from "@/lib/api/authAPI";
+import { signin } from "@/api/authAPI";
 import { useTranslation } from "react-i18next";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import i18n from "@/i18n";
@@ -28,7 +28,7 @@ const AdminPage = () => {
     mutationKey: ["signin"],
     onSuccess: (dataLogin) => {
       localStorage.setItem("token", dataLogin.token);
-      router.push("/dashboard")
+      router.push("/dashboard");
     },
   });
 
@@ -157,6 +157,9 @@ const AdminPage = () => {
                 disabled={isPending}
                 className="w-full py-3 bg-linear-to-r from-indigo-600 to-indigo-500 text-white rounded-md text-sm font-semibold hover:from-indigo-700 hover:to-indigo-600 disabled:opacity-50 transition-all duration-200 shadow-lg shadow-indigo-500/25 active:scale-[0.98] flex items-center justify-center"
               >
+                {isPending && (
+                  <span className="size-5 animate-spin rounded-full border-2 border-white/40 border-t-white mx-2" />
+                )}
                 {isPending
                   ? t("login.admin.submitting")
                   : t("login.admin.submit")}

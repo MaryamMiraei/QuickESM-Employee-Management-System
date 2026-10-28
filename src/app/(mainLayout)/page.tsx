@@ -1,21 +1,9 @@
-"use client";
-import { useRouter } from "next/navigation";
-import { useEffect } from "react";
+
 
 const HomePage = () => {
-  const router = useRouter();
+  return (
+    <div>HomePage</div>
+  )
+}
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-
-    if (token) {
-      router.replace("/dashboard");
-    } else {
-      router.replace("/login");
-    }
-  }, [router]);
-
-  return null;
-};
-
-export default HomePage;
+export default HomePage
