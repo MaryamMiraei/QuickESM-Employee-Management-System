@@ -133,7 +133,7 @@ const Menu = () => {
   return (
     <nav>
       <button
-        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10"
+        className="lg:hidden absolute top-6 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10"
         onClick={() => setIsOpen(true)}
       >
         <svg
@@ -154,7 +154,9 @@ const Menu = () => {
           <path d="M4 19h16"></path>
         </svg>
       </button>
-      {isOpen && <div className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-40"></div>}
+      {isOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-40"></div>
+      )}
 
       <aside
         className={`fixed inset-y-0 left-0 w-72 bg-linear-to-b from-slate-900 via-slate-900 to-slate-950 text-white z-50  flex flex-col transform transition-transform duration-300  
@@ -244,6 +246,7 @@ const Menu = () => {
               <Link
                 href={item.href}
                 key={item.href}
+                onClick={() => setIsOpen(false)}
                 className={`group flex items-center justify-between px-3 py-2.5 rounded-md text-[13px] font-medium transition-all duration-150 relative ${
                   isActive
                     ? "bg-indigo-500/12 text-indigo-300"
