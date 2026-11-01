@@ -133,7 +133,7 @@ const Menu = () => {
   return (
     <nav>
       <button
-        className="lg:hidden absolute top-6 left-4 z-50 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10"
+        className="lg:hidden absolute top-6 left-4 p-2 bg-slate-900 text-white rounded-lg shadow-lg border border-white/10"
         onClick={() => setIsOpen(true)}
       >
         <svg

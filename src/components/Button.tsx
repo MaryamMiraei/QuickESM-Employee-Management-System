@@ -15,7 +15,7 @@ const Button = ({
 }: ButtonProps) => {
   const variants = {
     primary: "text-white bg-indigo-500 hover:bg-indigo-600",
-    secondary: "bg-slate-200 text-slate-700 hover:bg-slate-300",
+    secondary: "bg-slate-200 text-slate-700 hover:bg-slate-300 border border-slate-400",
     danger: "bg-red-600 text-white hover:bg-red-700",
   };
 

@@ -1,4 +1,5 @@
 "use client"
+import { getDashboard } from "@/api/dashboard";
 import { dashboard } from "@/api/requests";
 import StatCard from "@/components/StatCard";
 import { useQuery } from "@tanstack/react-query";
@@ -8,6 +9,7 @@ const DashboardPage = () => {
     queryKey: ["dashboardStatus"],
     queryFn: dashboard,
   });
+
 
   const statusCard = [
     {

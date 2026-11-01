@@ -1,9 +1,12 @@
 "use client";
 import { getEmployees } from "@/api/employee";
 import Button from "@/components/Button";
+import Input from "@/components/Input";
+import Modal from "@/components/Modal";
 import { getInitials } from "@/utils/AUXFunctions";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import EmployeeModal from "./components/EmployeeModal";
 
 const EmployeePage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
@@ -22,10 +25,10 @@ const EmployeePage = () => {
     const searchValue = search.toLowerCase().trim();
 
     return (
-      employee.firstName.toLowerCase().includes(search) ||
-      employee.lastName.toLowerCase().includes(search) ||
-      employee.department.toLowerCase().includes(search) ||
-      employee.position.toLowerCase().includes(search)
+      employee.firstName.toLowerCase().includes(searchValue) ||
+      employee.lastName.toLowerCase().includes(searchValue) ||
+      employee.department.toLowerCase().includes(searchValue) ||
+      employee.position.toLowerCase().includes(searchValue)
     );
   });
 
@@ -64,6 +67,9 @@ const EmployeePage = () => {
           Add Employee
         </Button>
       </header>
+      <div>
+        {addFormModal && <EmployeeModal close={() => setAddFormModal(false)} />}
+      </div>
 
       <search>
         <div className="flex flex-col sm:flex-row gap-3 mb-6 ">
@@ -112,7 +118,7 @@ const EmployeePage = () => {
           </select>
         </div>
       </search>
-      <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
+      <main className="grid grid-cols-1 sm:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
         {filteredEmployees?.length > 0 ? (
           filteredEmployees?.map((employee) => (
             <div

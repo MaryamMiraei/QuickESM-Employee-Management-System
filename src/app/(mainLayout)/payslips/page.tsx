@@ -2,6 +2,7 @@
 import Button from "@/components/Button";
 import Table from "@/components/Table";
 import { useState } from "react";
+import PayslipsModal from "./components/PayslipsModal";
 
 const PayslipsPage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
@@ -52,6 +53,7 @@ const PayslipsPage = () => {
           Generate Payslips
         </Button>
       </header>
+      {addFormModal && <PayslipsModal close={()=> setAddFormModal(false)}/>}
       <main>
         <Table
           columns={columns}
