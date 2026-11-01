@@ -8,13 +8,25 @@ import { useState } from "react";
 const EmployeePage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
   const [search, setSearch] = useState("");
+  const [department, setDepartment] = useState("");
   const {
     data: employees,
     isPending,
     isError,
   } = useQuery({
-    queryKey: ["employees"],
-    queryFn: getEmployees,
+    queryKey: ["employees", department],
+    queryFn: () => getEmployees(department ?? ""),
+  });
+
+  const filteredEmployees = employees?.filter((employee) => {
+    const searchValue = search.toLowerCase().trim();
+
+    return (
+      employee.firstName.toLowerCase().includes(search) ||
+      employee.lastName.toLowerCase().includes(search) ||
+      employee.department.toLowerCase().includes(search) ||
+      employee.position.toLowerCase().includes(search)
+    );
   });
 
   if (isPending) {
@@ -83,6 +95,8 @@ const EmployeePage = () => {
           <select
             className="max-w-40 px-2 py-1 outline-none border-2 border-slate-500/10 rounded-md focus:ring-1 focus:ring-indigo-500/50 "
             name="filter"
+            value={department}
+            onChange={(e) => setDepartment(e.target.value)}
           >
             <option value="">All Departments</option>
             <option value="Engineering">Engineering</option>
@@ -99,72 +113,81 @@ const EmployeePage = () => {
         </div>
       </search>
       <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-        {employees.map((employee) => (
-          <div key={employee.id} className="group relative overflow-hidden">
-            <div className="relative aspect-4/3 w-full overflow-hidden bg-linear-to-br from-slate-100 to-slate-50">
-              <div className="w-full h-full flex items-center justify-center">
-                <div className="w-20 h-20 rounded-full bg-linear-to-br from-indigo-100 to-slate-100 flex items-center justify-center">
-                  <span className="text-2xl font-medium text-indigo-400">
-                    {getInitials(employee.firstName)}{" "}
-                    {getInitials(employee.lastName)}
-                  </span>
+        {filteredEmployees?.length > 0 ? (
+          filteredEmployees?.map((employee) => (
+            <div
+              key={employee.id}
+              className="group relative overflow-hidden rounded-lg border border-slate-300"
+            >
+              <div className="relative aspect-4/3 w-full overflow-hidden bg-linear-to-br from-slate-100 to-slate-50">
+                <div className="w-full h-full flex items-center justify-center">
+                  <div className="w-20 h-20 rounded-full bg-linear-to-br from-indigo-100 to-slate-100 flex items-center justify-center">
+                    <span className="text-2xl font-medium text-indigo-400">
+                      {getInitials(employee.firstName)}{" "}
+                      {getInitials(employee.lastName)}
+                    </span>
+                  </div>
                 </div>
               </div>
+              <div className="absolute top-3 left-3 flex gap-2">
+                <span className="bg-white/90 backdrop-blur-sm px-2.5 py-1 text-xs font-semibold text-slate-600 rounded-lg shadow-sm">
+                  {employee.department}
+                </span>
+              </div>
+              <div className="absolute inset-0 bg-linear-to-t from-indigo-700/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end justify-center pb-6 gap-3">
+                <button className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-indigo-600 rounded-xl shadow-lg transition-all hover:scale-105">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-pencil w-4 h-4"
+                    aria-hidden="true"
+                  >
+                    <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
+                    <path d="m15 5 4 4"></path>
+                  </svg>
+                </button>
+                <button className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-rose-600 rounded-xl shadow-lg transition-all hover:scale-105 disabled:opacity-50">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-trash2 lucide-trash-2 w-4 h-4"
+                    aria-hidden="true"
+                  >
+                    <path d="M10 11v6"></path>
+                    <path d="M14 11v6"></path>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                    <path d="M3 6h18"></path>
+                    <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                  </svg>
+                </button>
+              </div>
+              <div className="p-5">
+                <h3 className="text-slate-900">
+                  {employee.firstName} {employee.lastName}
+                </h3>
+                <p className="text-xs text-slate-500">{employee.position}</p>
+              </div>
             </div>
-            <div className="absolute top-3 left-3 flex gap-2">
-              <span className="bg-white/90 backdrop-blur-sm px-2.5 py-1 text-xs font-semibold text-slate-600 rounded-lg shadow-sm">
-                {employee.department}
-              </span>
-            </div>
-            <div className="absolute inset-0 bg-linear-to-t from-indigo-700/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end justify-center pb-6 gap-3">
-              <button className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-indigo-600 rounded-xl shadow-lg transition-all hover:scale-105">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-pencil w-4 h-4"
-                  aria-hidden="true"
-                >
-                  <path d="M21.174 6.812a1 1 0 0 0-3.986-3.987L3.842 16.174a2 2 0 0 0-.5.83l-1.321 4.352a.5.5 0 0 0 .623.622l4.353-1.32a2 2 0 0 0 .83-.497z"></path>
-                  <path d="m15 5 4 4"></path>
-                </svg>
-              </button>
-              <button className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-rose-600 rounded-xl shadow-lg transition-all hover:scale-105 disabled:opacity-50">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  className="lucide lucide-trash2 lucide-trash-2 w-4 h-4"
-                  aria-hidden="true"
-                >
-                  <path d="M10 11v6"></path>
-                  <path d="M14 11v6"></path>
-                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
-                  <path d="M3 6h18"></path>
-                  <path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                </svg>
-              </button>
-            </div>
-            <div className="p-5">
-              <h3 className="text-slate-900">
-                {employee.firstName} {employee.lastName}
-              </h3>
-              <p className="text-xs text-slate-500">{employee.position}</p>
-            </div>
-          </div>
-        ))}
+          ))
+        ) : (
+          <p className="col-span-full text-center text-slate-500">
+            No employees found.
+          </p>
+        )}
       </main>
     </div>
   );

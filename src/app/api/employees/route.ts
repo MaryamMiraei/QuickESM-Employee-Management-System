@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextResponse, type NextRequest } from "next/server";
 
 const employees = [
   {
@@ -7,7 +7,7 @@ const employees = [
     bio: "",
     createdAt: "2026-04-02T06:42:07.670Z",
     deductions: 299.99,
-    department: "Engineer",
+    department: "Engineering",
     email: "tem1@gmail.com",
     employmentStatus: "ACTIVE",
     firstName: "Maryam",
@@ -33,7 +33,7 @@ const employees = [
     bio: "",
     createdAt: "2026-04-02T06:42:07.670Z",
     deductions: 299.99,
-    department: "Engineer",
+    department: "Engineering",
     email: "tem1@gmail.com",
     employmentStatus: "ACTIVE",
     firstName: "Pegah",
@@ -53,8 +53,66 @@ const employees = [
     __v: 0,
     _id: "69ce0fbfd7c77ea9be93d05",
   },
+  {
+    allowances: 300,
+    basicSalary: 30000,
+    bio: "",
+    createdAt: "2026-04-02T06:42:07.670Z",
+    deductions: 299.99,
+    department: "Sales",
+    email: "tem1@gmail.com",
+    employmentStatus: "ACTIVE",
+    firstName: "James",
+    id: "69ce0fbfd7c77ea9be93d06",
+    isDeleted: false,
+    joinDate: "2026-04-02T00:00:00.000Z",
+    lastName: "Thomas",
+    phone: "7878787878",
+    position: "Marketing",
+    updatedAt: "2026-04-02T15:30:43.062Z",
+    user: { email: "tem1@gmail.com", role: "EMPLOYEE" },
+    userId: {
+      _id: "69ce0fbfd7c77ea9be93d053",
+      email: "tem1@gmail.com",
+      role: "EMPLOYEE",
+    },
+    __v: 0,
+    _id: "69ce0fbfd7c77ea9be93d06",
+  },
+  {
+    allowances: 300,
+    basicSalary: 30000,
+    bio: "",
+    createdAt: "2026-04-02T06:42:07.670Z",
+    deductions: 299.99,
+    department: "Marketing",
+    email: "tem1@gmail.com",
+    employmentStatus: "ACTIVE",
+    firstName: "Alex",
+    id: "69ce0fbfd7c77ea9be93d07",
+    isDeleted: false,
+    joinDate: "2026-04-02T00:00:00.000Z",
+    lastName: "Michael",
+    phone: "7878787878",
+    position: "Associate Business Support",
+    updatedAt: "2026-04-02T15:30:43.062Z",
+    user: { email: "tem1@gmail.com", role: "EMPLOYEE" },
+    userId: {
+      _id: "69ce0fbfd7c77ea9be93d053",
+      email: "tem1@gmail.com",
+      role: "EMPLOYEE",
+    },
+    __v: 0,
+    _id: "69ce0fbfd7c77ea9be93d07",
+  },
 ];
 
-export const GET = async () => {
-  return NextResponse.json(employees);
+export const GET = async (request: NextRequest) => {
+  const department = request.nextUrl.searchParams.get("department");
+
+  const filteredEmployees = department
+    ? employees.filter((employee) => employee.department === department)
+    : employees;
+
+  return NextResponse.json(filteredEmployees);
 };

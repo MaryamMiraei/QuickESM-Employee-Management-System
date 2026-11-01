@@ -23,9 +23,7 @@ const Textarea = ({
       <textarea
         id={id}
         className={`
-          w-full resize-y rounded-lg border border-slate-300
-          bg-white px-4 py-3 outline-none
-          focus:border-indigo-500
+          w-full resize-y px-2 py-1 border-2 border-slate-500/10 rounded-md focus-within:ring-1 focus-within:ring-indigo-500/50 outline-none font-medium text-[12px] bg-slate-100
           ${error ? "border-red-500" : ""}
           ${className}
         `}

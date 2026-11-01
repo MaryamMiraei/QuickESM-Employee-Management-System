@@ -1,5 +1,6 @@
 "use client"
 import { dashboard } from "@/api/requests";
+import StatCard from "@/components/StatCard";
 import { useQuery } from "@tanstack/react-query";
 
 const DashboardPage = () => {
@@ -110,27 +111,16 @@ const DashboardPage = () => {
   ];
 
   return (
-    <div className="p-5">
+    <div className="p-5 ">
       <header className="ml-15 lg:ml-0 mb-8">
         <h1 className="font-bold text-xl">Dashboard</h1>
         <p className="text-gray-500 text-sm">
           Welcome back, Admin — here's your overview
         </p>
       </header>
-      <main className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      <main className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-5">
         {statusCard.map((item) => (
-          <div key={item.title} className=" p-5 sm:p-6 relative overflow-hidden group flex items-center justify-between border border-slate-500/10 rounded-md hover:-translate-y-0.5 transition-transform duration-300">
-            <div>
-              <div className="absolute left-0 top-0 bottom-0 w-1 rounded-r-full bg-slate-500/70 group-hover:bg-indigo-500/70">
-              
-              </div>
-              <p className="text-sm font-medium text-slate-700">{item.title}</p>
-              <p className="text-2xl font-bold text-slate-900 mt-1">
-                {item.statusNumber}
-              </p>
-            </div>
-            {item.icon}
-          </div>
+          <StatCard key={item.title} title={item.title} icon={item.icon} statusNumber={item.statusNumber ?? 0}/>
         ))}
       </main>
     </div>

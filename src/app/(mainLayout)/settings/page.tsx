@@ -1,9 +1,10 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
+import Textarea from "@/components/TextArea";
 
 const SettingsPage = () => {
   return (
-    <div className="p-5 sm:p-6 mb-6">
+    <div className="p-5 sm:p-6 mb-6 bg-slate-100">
       <header className="ml-15 lg:ml-0 mb-8">
         <div>
           <h1 className="font-bold text-xl">Settings</h1>
@@ -14,7 +15,7 @@ const SettingsPage = () => {
       </header>
 
       <main className="p-5 sm:p-6 mb-6">
-        <form className="border border-slate-200/50 rounded-xl p-5">
+        <form className="border border-slate-200/70 shadow-2xl rounded-xl p-5 bg-white">
           <h2 className="text-base font-medium text-slate-900 mb-6 pb-4 border-b border-slate-100 flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -43,20 +44,13 @@ const SettingsPage = () => {
               </div>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-700 mb-2">
-                Bio
-              </label>
-              <textarea
-                name="bio"
-                placeholder="Write a brief bio..."
-                className="resize-none "
-              ></textarea>
+              
+              <Textarea placeholder="Write a brief bio..."  label="Bio" id="bio"/>
               <p className="text-xs text-slate-400 mt-1.5">
                 This will be displayed on your profile.
               </p>
             </div>
             <div className="flex justify-end pt-2">
-
               <Button>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

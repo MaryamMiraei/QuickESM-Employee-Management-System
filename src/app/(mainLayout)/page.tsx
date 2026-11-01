@@ -1,8 +1,10 @@
+import Redirect from "@/components/Redirect"
 
 
 const HomePage = () => {
   return (
-    <div>HomePage</div>
+    <div><Redirect/></div>
+
   )
 }
 

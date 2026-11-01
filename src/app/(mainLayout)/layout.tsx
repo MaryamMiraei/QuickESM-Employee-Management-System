@@ -8,7 +8,7 @@ const MainLayout = ({ children }: { children: React.ReactNode }) => {
         <div>
           <Menu />
         </div>
-        <div className="lg:ml-74">{children}</div>
+        <div className="lg:ml-74 bg-slate-50 min-h-screen">{children}</div>
       </main>
     </>
   );
