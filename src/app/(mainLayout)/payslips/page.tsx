@@ -1,28 +1,90 @@
 "use client";
 import Button from "@/components/Button";
-import Table from "@/components/Table";
+import Table, { type IColumn } from "@/components/Table";
 import { useState } from "react";
 import PayslipsModal from "./components/PayslipsModal";
+import { months } from "@/data/months";
+import { useQuery } from "@tanstack/react-query";
+import { getPayslips } from "@/api/payslips";
 
 const PayslipsPage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
+  const {
+    data: payslips = [],
+    isLoading,
+    isError,
+  } = useQuery({
+    queryKey: ["payslips"],
+    queryFn: getPayslips,
+  });
 
-  interface IPayslips {
-    id: number;
-    employee: string;
-    type: string;
-    dates: string;
-    reason: string;
-    status: string;
-  }
-  const columns = [
-    { key: "employee", title: "Employee" },
-    { key: "period", title: "Period" },
-    { key: "basic Salary", title: "Basic Salary" },
-    { key: "net Salary", title: "Net Salary" },
-    { key: "actions", title: "Actions" },
+  const formatCurrency = (value: number) =>
+    new Intl.NumberFormat("en-US", {
+      style: "currency",
+      currency: "USD",
+    }).format(value);
+
+  const columns: IColumn<IPayslip>[] = [
+    {
+      key: "employee",
+      title: "Employee",
+      render: (row: IPayslip) =>
+        row.employee
+          ? `${row.employee.firstName} ${row.employee.lastName}`
+          : "-",
+    },
+    {
+      key: "period",
+      title: "Period",
+      className: "text-slate-500",
+      render: (row: IPayslip) => {
+        const month = months.find((item) => Number(item.value) === row.month);
+        return `${month?.label ?? "-"} ${row.year}`;
+      },
+    },
+    {
+      key: "basicSalary",
+      title: "Basic Salary",
+      className: "text-slate-500",
+      render: (row: IPayslip) => formatCurrency(row.basicSalary),
+    },
+    {
+      key: "netSalary",
+      title: "Net Salary",
+      render: (row: IPayslip) => formatCurrency(row.netSalary),
+    },
+    {
+      key: "actions",
+      title: "Actions",
+      render: (row: IPayslip) => (
+        <a
+          href={`/print/payslips/${row.id}`}
+          target="_blank"
+          className="inline-flex items-center px-3 py-1.5 text-xs font-medium rounded text-blue-600 bg-blue-50 hover:bg-white ring-1 ring-blue-600/10 hover:cursor-pointer transition-transform  active:scale-90"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="lucide lucide-download w-3 h-3 mr-1.5"
+            aria-hidden="true"
+          >
+            <path d="M12 15V3"></path>
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <path d="m7 10 5 5 5-5"></path>
+          </svg>
+          Download
+        </a>
+      ),
+    },
   ];
-  const payslips: IPayslips[] = [];
+  // const payslips: IPayslips[] = [];
 
   return (
     <div className="p-5">
@@ -53,7 +115,7 @@ const PayslipsPage = () => {
           Generate Payslips
         </Button>
       </header>
-      {addFormModal && <PayslipsModal close={()=> setAddFormModal(false)}/>}
+      {addFormModal && <PayslipsModal close={() => setAddFormModal(false)} />}
       <main>
         <Table
           columns={columns}

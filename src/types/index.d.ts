@@ -1,4 +1,3 @@
-
 interface ILoginFormData {
   email: string;
   password: string;
@@ -43,4 +42,35 @@ interface IEmployee {
   };
   __v: number;
   _id: string;
+}
+interface IPayslips {
+  id: string;
+  employeeId: string;
+  basicSalary: number;
+  allowances: number;
+  deductions: number;
+  month: number;
+  year: number;
+  createdAt: string;
+  updatedAt: string;
+}
+ interface IPayslip {
+  id: string;
+  employeeId: string;
+  basicSalary: number;
+  allowances: number;
+  deductions: number;
+  netSalary: number;
+  month: number;
+  year: number;
+  createdAt: string;
+  updatedAt: string;
+  employee: {
+    id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    department: string;
+    position: string;
+  } | null;
 }

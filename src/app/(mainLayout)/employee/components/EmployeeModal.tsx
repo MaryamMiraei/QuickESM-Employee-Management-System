@@ -2,12 +2,15 @@ import Button from "@/components/Button";
 import FormArea from "@/components/FormArea";
 import Input from "@/components/Input";
 import Modal from "@/components/Modal";
+import Select from "@/components/Select";
 import Textarea from "@/components/TextArea";
+import { systemRole } from "@/data/systemRole";
 interface IEmployeeModal {
   close: () => void;
 }
 
 const EmployeeModal = ({ close }: IEmployeeModal) => {
+
   return (
     <div>
       <Modal
@@ -48,8 +51,14 @@ const EmployeeModal = ({ close }: IEmployeeModal) => {
             <div>
               <Input type="email" id="email" label="Work Email" />
             </div>
-            <div>
+            <div className="flex items-center gap-3">
               <Input type="text" id="password" label="Temporary Password" />
+              <Select
+                label="System Role"
+                options={systemRole}
+                id="systemRole"
+                placeholderShow={false}
+              />
             </div>
           </FormArea>
           <div className="mt-5 mb-3 flex gap-3 justify-end items-center">

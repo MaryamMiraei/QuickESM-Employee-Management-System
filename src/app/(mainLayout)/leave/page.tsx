@@ -35,6 +35,8 @@ const LeavePage = () => {
             rowKey="id"
             emptyMessage="No leave applications found"
           />
+
+          
         </main>
       </div>
     </>

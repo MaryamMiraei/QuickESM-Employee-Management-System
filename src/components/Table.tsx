@@ -1,8 +1,9 @@
 import type { ReactNode } from "react";
 
-interface IColumn<T> {
+export interface IColumn<T> {
   key: string;
   title: string;
+  className?:string;
   render?: (row: T) => ReactNode;
 }
 
@@ -36,9 +37,12 @@ function Table<T>({
           <tbody>
             {data.length > 0 ? (
               data.map((row) => (
-                <tr key={String(row[rowKey])}>
+                <tr key={String(row[rowKey])} className="hover:bg-slate-200">
                   {columns.map((column) => (
-                    <td key={String(column.key)} className="px-6 py-4">
+                    <td
+                      key={String(column.key)}
+                      className={`px-6 py-4 text-center ${column.className ?? ""}`}
+                    >
                       {column.render
                         ? column.render(row)
                         : String(row[column.key as keyof T] ?? "")}
