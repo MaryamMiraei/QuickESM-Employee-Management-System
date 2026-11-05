@@ -1,8 +1,6 @@
 "use client";
 import { getEmployees } from "@/api/employee";
 import Button from "@/components/Button";
-import Input from "@/components/Input";
-import Modal from "@/components/Modal";
 import { getInitials } from "@/utils/AUXFunctions";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
@@ -10,6 +8,22 @@ import EmployeeModal from "./components/EmployeeModal";
 
 const EmployeePage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
+  const [selectedEmployee, setSelectedEmployee] = useState<IEmployee | null>(
+    null,
+  );
+
+  const handleAddEmployee = () => {
+    setSelectedEmployee(null);
+    setAddFormModal(true);
+  };
+
+  const handleEditEmployee = (employee: IEmployee) => {
+    setSelectedEmployee(employee);
+    setAddFormModal(true);
+  };
+
+  
+
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("");
   const {
@@ -47,7 +61,7 @@ const EmployeePage = () => {
           <h1 className="font-bold text-xl">Employee</h1>
           <p className="text-gray-500 text-sm">Manage your team members</p>
         </div>
-        <Button onClick={() => setAddFormModal(true)}>
+        <Button onClick={handleAddEmployee}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
@@ -68,7 +82,16 @@ const EmployeePage = () => {
         </Button>
       </header>
       <div>
-        {addFormModal && <EmployeeModal close={() => setAddFormModal(false)} />}
+        {addFormModal && (
+          <EmployeeModal
+            close={() => {
+              (setAddFormModal(false), setSelectedEmployee(null));
+            }}
+            employee={selectedEmployee}
+            selectedEmployee={selectedEmployee}
+            setSelectedEmployee={setSelectedEmployee}
+          />
+        )}
       </div>
 
       <search>
@@ -141,7 +164,10 @@ const EmployeePage = () => {
                 </span>
               </div>
               <div className="absolute inset-0 bg-linear-to-t from-indigo-700/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700 flex items-end justify-center pb-6 gap-3">
-                <button className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-indigo-600 rounded-xl shadow-lg transition-all hover:scale-105">
+                <button
+                  onClick={() => handleEditEmployee(employee)}
+                  className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-indigo-600 rounded-xl shadow-lg transition-all hover:scale-105"
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"

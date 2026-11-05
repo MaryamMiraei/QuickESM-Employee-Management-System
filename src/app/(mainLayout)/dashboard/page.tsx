@@ -1,13 +1,12 @@
 "use client"
 import { getDashboard } from "@/api/dashboard";
-import { dashboard } from "@/api/requests";
 import StatCard from "@/components/StatCard";
 import { useQuery } from "@tanstack/react-query";
 
 const DashboardPage = () => {
   const { data } = useQuery<IDashboard>({
     queryKey: ["dashboardStatus"],
-    queryFn: dashboard,
+    queryFn: getDashboard,
   });
 
 
@@ -83,7 +82,7 @@ const DashboardPage = () => {
           <path d="M3 10h18"></path>
         </svg>
       ),
-      statusNumber: data?.todayAttendance,
+      statusNumber: data?.todayAttendance ?? 0,
     },
     {
       title: "Pending Leaves",
@@ -108,7 +107,7 @@ const DashboardPage = () => {
           <path d="M16 17H8"></path>
         </svg>
       ),
-      statusNumber: data?.pendingLeaves,
+      statusNumber: data?.pendingLeaves ?? 0,
     },
   ];
 

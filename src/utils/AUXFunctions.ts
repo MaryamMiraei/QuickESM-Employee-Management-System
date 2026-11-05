@@ -7,3 +7,4 @@ export const getInitials = (name: string) => {
     .join("")
     .toUpperCase();
 };
+export const formatDate = (date: string) => date.split("T")[0];

@@ -74,3 +74,19 @@ interface IPayslips {
     position: string;
   } | null;
 }
+
+type EmployeeFormData = Pick<
+  IEmployee,
+  | "allowances"
+  | "basicSalary"
+  | "bio"
+  | "deductions"
+  | "department"
+  | "email"
+  | "employmentStatus"
+  | "firstName"
+  | "joinDate"
+  | "lastName"
+  | "phone"
+  | "position"
+>;

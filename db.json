@@ -1,0 +1,150 @@
+{
+  "employees": [
+    {
+      "allowances": 1000,
+      "basicSalary": 10000,
+      "bio": "",
+      "createdAt": "2026-04-02T06:42:07.670Z",
+      "deductions": 299.99,
+      "department": "Engineering",
+      "email": "Maryam@gmail.com",
+      "employmentStatus": "ACTIVE",
+      "firstName": "Maryam",
+      "id": "69ce0fbfd7c77ea9be93d055",
+      "isDeleted": false,
+      "joinDate": "2026-04-02T00:00:00.000Z",
+      "lastName": "Miraei",
+      "phone": "7878787878",
+      "position": "Engineer",
+      "updatedAt": "2026-04-02T15:30:43.062Z",
+      "user": {
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "userId": {
+        "_id": "69ce0fbfd7c77ea9be93d053",
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "__v": 0,
+      "_id": "69ce0fbfd7c77ea9be93d055"
+    },
+    {
+      "allowances": 1000,
+      "basicSalary": 10000,
+      "bio": "",
+      "createdAt": "2026-04-02T06:42:07.670Z",
+      "deductions": 299.99,
+      "department": "Engineering",
+      "email": "Pegah@gmail.com",
+      "employmentStatus": "ACTIVE",
+      "firstName": "Pegah",
+      "id": "69ce0fbfd7c77ea9be93d05",
+      "isDeleted": false,
+      "joinDate": "2026-04-02",
+      "lastName": "Ashrafi",
+      "phone": "7878787878",
+      "position": "Engineer",
+      "updatedAt": "2026-11-05T11:08:03.664Z",
+      "user": {
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "userId": {
+        "_id": "69ce0fbfd7c77ea9be93d053",
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "__v": 0,
+      "_id": "69ce0fbfd7c77ea9be93d05"
+    },
+    {
+      "allowances": 500,
+      "basicSalary": 5000,
+      "bio": "",
+      "createdAt": "2026-04-02T06:42:07.670Z",
+      "deductions": 299.99,
+      "department": "Sales",
+      "email": "James@gmail.com",
+      "employmentStatus": "ACTIVE",
+      "firstName": "James",
+      "id": "69ce0fbfd7c77ea9be93d06",
+      "isDeleted": false,
+      "joinDate": "2026-04-02",
+      "lastName": "Thomas",
+      "phone": "7878787878",
+      "position": "Marketing",
+      "updatedAt": "2026-11-05T11:07:08.216Z",
+      "user": {
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "userId": {
+        "_id": "69ce0fbfd7c77ea9be93d053",
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "__v": 0,
+      "_id": "69ce0fbfd7c77ea9be93d06"
+    },
+    {
+      "allowances": 600,
+      "basicSalary": 6000,
+      "bio": "",
+      "createdAt": "2026-04-02T06:42:07.670Z",
+      "deductions": 299.99,
+      "department": "Marketing",
+      "email": "alex@gmail.com",
+      "employmentStatus": "ACTIVE",
+      "firstName": "Alex",
+      "id": "69ce0fbfd7c77ea9be93d07",
+      "isDeleted": false,
+      "joinDate": "2026-04-02T00:00:00.000Z",
+      "lastName": "Michael",
+      "phone": "7878787878",
+      "position": "Associate Business Support",
+      "updatedAt": "2026-04-02T15:30:43.062Z",
+      "user": {
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "userId": {
+        "_id": "69ce0fbfd7c77ea9be93d053",
+        "email": "tem1@gmail.com",
+        "role": "EMPLOYEE"
+      },
+      "__v": 0,
+      "_id": "69ce0fbfd7c77ea9be93d07"
+    },
+    {
+      "allowances": 0,
+      "basicSalary": 0,
+      "bio": "",
+      "deductions": 0,
+      "department": "",
+      "email": "",
+      "employmentStatus": "ACTIVE",
+      "firstName": "",
+      "joinDate": "",
+      "lastName": "",
+      "phone": "",
+      "position": "",
+      "id": "83908aa6-91f5-40de-8d11-47d7ea16a26d",
+      "_id": "63a2d8ce-1dd9-4eb7-9490-f167c2f9a3bc",
+      "createdAt": "2026-11-05T10:50:21.592Z",
+      "updatedAt": "2026-11-05T11:06:17.768Z",
+      "isDeleted": false,
+      "user": {
+        "email": "",
+        "role": "EMPLOYEE"
+      },
+      "userId": {
+        "_id": "51ef3100-2197-4f19-8b4f-3a65ed576d4e",
+        "email": "",
+        "role": "EMPLOYEE"
+      },
+      "__v": 0
+    }
+  ],
+  "payslips": []
+}
