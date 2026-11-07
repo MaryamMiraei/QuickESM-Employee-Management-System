@@ -4,7 +4,6 @@ import Input from "@/components/Input";
 import Modal from "@/components/Modal";
 import Select from "@/components/Select";
 import Textarea from "@/components/TextArea";
-import { employees } from "@/data/employee";
 import { systemRole } from "@/data/systemRole";
 import { useAddEmployee } from "@/hooks/useAddEmployee";
 import { useUpdateEmployee } from "@/hooks/useUpdateEmployee";
@@ -13,7 +12,6 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 
 interface IEmployeeModal {
-  employee: IEmployee | null;
   setSelectedEmployee: React.Dispatch<React.SetStateAction<IEmployee | null>>;
   selectedEmployee: IEmployee | null;
   close: () => void;
@@ -21,80 +19,80 @@ interface IEmployeeModal {
 
 const EmployeeModal = ({
   close,
-  employee,
   selectedEmployee,
   setSelectedEmployee,
 }: IEmployeeModal) => {
+  const isEditMode = Boolean(selectedEmployee);
+  const { register, handleSubmit, reset, watch } = useForm<EmployeeFormData>({
+    shouldUnregister: false,
+  });
+  console.log("Watch:", watch());
 
-  const isEditMode = Boolean(employee);
-  const { register, handleSubmit, reset } = useForm<EmployeeFormData>();
-    const handleClose = () => {
-      close();
-      setSelectedEmployee(null);
-    };
+  
+  const handleClose = () => {
+    close();
+    setSelectedEmployee(null);
+  };
 
   const { mutate: postEmployee } = useAddEmployee(handleClose);
   const { mutate: putEmployee } = useUpdateEmployee(handleClose);
-  
+
   const handleEmployeeSubmit = (data: EmployeeFormData) => {
-      if (selectedEmployee) {
-        // Edit Employee
-        const updatedEmployee: IEmployee = {
-          ...selectedEmployee,
-          ...data,
-          updatedAt: new Date().toISOString(),
-        };
-            putEmployee({
-              id: selectedEmployee.id,
-              data: updatedEmployee,
-            });
-  
-        console.log("Updated Employee:", updatedEmployee);
-      } else {
-        // Add Employee
-        const newEmployee: IEmployee = {
-          ...data,
-          id: crypto.randomUUID(),
+  console.log("Submitted Data:", data);
+
+    if (selectedEmployee) {
+      // Edit Employee
+      const updatedEmployee: IEmployee = {
+        ...selectedEmployee,
+        ...data,
+        updatedAt: new Date().toISOString(),
+      };
+      putEmployee({
+        id: selectedEmployee.id,
+        data: updatedEmployee,
+      });
+
+      console.log("Updated Employee:", updatedEmployee);
+    } else {
+      // Add Employee
+      const newEmployee: IEmployee = {
+        ...data,
+        id: crypto.randomUUID(),
+        _id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+        isDeleted: false,
+        user: {
+          email: data.email,
+          role: "EMPLOYEE",
+        },
+        userId: {
           _id: crypto.randomUUID(),
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString(),
-          isDeleted: false,
-          user: {
-            email: data.email,
-            role: "EMPLOYEE",
-          },
-          userId: {
-            _id: crypto.randomUUID(),
-            email: data.email,
-            role: "EMPLOYEE",
-          },
-          __v: 0,
-        };
-            postEmployee(newEmployee);
+          email: data.email,
+          role: "EMPLOYEE",
+        },
+        __v: 0,
+      };
+      postEmployee(newEmployee);
 
-  
-        console.log("New Employee:", newEmployee);
-        console.log(employees, "all employees")
-      }
-    
-    };
-
+    }
+  };
 
   useEffect(() => {
-    if (employee) {
+    if (selectedEmployee) {
       reset({
-        allowances: employee.allowances,
-        basicSalary: employee.basicSalary,
-        bio: employee.bio,
-        deductions: employee.deductions,
-        department: employee.department,
-        email: employee.email,
-        employmentStatus: employee.employmentStatus,
-        firstName: employee.firstName,
-        joinDate: formatDate(employee.joinDate),
-        lastName: employee.lastName,
-        phone: employee.phone,
-        position: employee.position,
+        allowances: selectedEmployee.allowances,
+        basicSalary: selectedEmployee.basicSalary,
+        bio: selectedEmployee.bio,
+        deductions: selectedEmployee.deductions,
+        department: selectedEmployee.department,
+        email: selectedEmployee.email,
+        employmentStatus: selectedEmployee.employmentStatus,
+        firstName: selectedEmployee.firstName,
+        joinDate: formatDate(selectedEmployee.joinDate),
+        lastName: selectedEmployee.lastName,
+        phone: selectedEmployee.phone,
+        position: selectedEmployee.position,
       });
     } else {
       reset({
@@ -112,9 +110,7 @@ const EmployeeModal = ({
         position: "",
       });
     }
-  }, [employee, reset]);
-
-
+  }, [selectedEmployee, reset]);
 
   return (
     <div>
@@ -127,7 +123,10 @@ const EmployeeModal = ({
             : "Create a user account and employee profile"
         }
       >
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(handleEmployeeSubmit)}>
+        <form
+          className="flex flex-col gap-2"
+          onSubmit={handleSubmit(handleEmployeeSubmit)}
+        >
           <FormArea title="Personal Information">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
               <Input
@@ -180,21 +179,21 @@ const EmployeeModal = ({
                 min={0}
                 id="basicSalary"
                 label="Basic Salary"
-                {...register("basicSalary")}
+                {...register("basicSalary", { valueAsNumber: true })}
               />
               <Input
                 type="number"
                 min={0}
                 id="allowances"
                 label="Allowances"
-                {...register("allowances")}
+                {...register("allowances", { valueAsNumber: true })}
               />
               <Input
                 type="number"
                 min={0}
                 id="deductions"
                 label="Deductions"
-                {...register("deductions")}
+                {...register("deductions", { valueAsNumber: true })}
               />
             </div>
           </FormArea>
@@ -218,7 +217,7 @@ const EmployeeModal = ({
             </div>
           </FormArea>
           <div className="mt-5 mb-3 flex gap-3 justify-end items-center">
-            <Button variant="secondary" onClick={close}>
+            <Button type="button" variant="secondary" onClick={close}>
               Cancel
             </Button>
             <Button type="submit">

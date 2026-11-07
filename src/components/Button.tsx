@@ -10,7 +10,7 @@ const Button = ({
   variant = "primary",
   fullWidth = false,
   className = "",
-  type = "button",
+  type,
   ...props
 }: ButtonProps) => {
   const variants = {

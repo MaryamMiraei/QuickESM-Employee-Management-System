@@ -5,6 +5,7 @@ import { getInitials } from "@/utils/AUXFunctions";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
 import EmployeeModal from "./components/EmployeeModal";
+import { useDeleteEmployee } from "@/hooks/useDeleteEmployee";
 
 const EmployeePage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
@@ -22,10 +23,17 @@ const EmployeePage = () => {
     setAddFormModal(true);
   };
 
-  
+  const { mutate: removeEmployee, isPending: isDeleting } = useDeleteEmployee();
+
+  const handleDeleteEmployee = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this employee?")) {
+      removeEmployee(id);
+    }
+  };
 
   const [search, setSearch] = useState("");
   const [department, setDepartment] = useState("");
+
   const {
     data: employees,
     isPending,
@@ -87,7 +95,6 @@ const EmployeePage = () => {
             close={() => {
               (setAddFormModal(false), setSelectedEmployee(null));
             }}
-            employee={selectedEmployee}
             selectedEmployee={selectedEmployee}
             setSelectedEmployee={setSelectedEmployee}
           />
@@ -152,7 +159,7 @@ const EmployeePage = () => {
                 <div className="w-full h-full flex items-center justify-center">
                   <div className="w-20 h-20 rounded-full bg-linear-to-br from-indigo-100 to-slate-100 flex items-center justify-center">
                     <span className="text-2xl font-medium text-indigo-400">
-                      {getInitials(employee.firstName)}{" "}
+                      {getInitials(employee.firstName)}
                       {getInitials(employee.lastName)}
                     </span>
                   </div>
@@ -185,7 +192,11 @@ const EmployeePage = () => {
                     <path d="m15 5 4 4"></path>
                   </svg>
                 </button>
-                <button className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-rose-600 rounded-xl shadow-lg transition-all hover:scale-105 disabled:opacity-50">
+                <button
+                  className="p-2.5 bg-white/90 backdrop-blur-sm text-slate-700 hover:text-rose-600 rounded-xl shadow-lg transition-all hover:scale-105 disabled:opacity-50"
+                  disabled={isDeleting}
+                  onClick={() => handleDeleteEmployee(employee.id)}
+                >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="24"
