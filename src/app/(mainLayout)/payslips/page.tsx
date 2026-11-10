@@ -6,6 +6,7 @@ import PayslipsModal from "./components/PayslipsModal";
 import { months } from "@/data/months";
 import { useQuery } from "@tanstack/react-query";
 import { getPayslips } from "@/api/payslips";
+import { formatCurrency } from "@/utils/AUXFunctions";
 
 const PayslipsPage = () => {
   const [addFormModal, setAddFormModal] = useState(false);
@@ -18,11 +19,7 @@ const PayslipsPage = () => {
     queryFn: getPayslips,
   });
 
-  const formatCurrency = (value: number) =>
-    new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(value);
+
 
   const columns: IColumn<IPayslip>[] = [
     {

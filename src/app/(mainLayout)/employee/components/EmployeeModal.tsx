@@ -38,7 +38,6 @@ const EmployeeModal = ({
   const { mutate: putEmployee } = useUpdateEmployee(handleClose);
 
   const handleEmployeeSubmit = (data: EmployeeFormData) => {
-  console.log("Submitted Data:", data);
 
     if (selectedEmployee) {
       // Edit Employee
@@ -52,7 +51,6 @@ const EmployeeModal = ({
         data: updatedEmployee,
       });
 
-      console.log("Updated Employee:", updatedEmployee);
     } else {
       // Add Employee
       const newEmployee: IEmployee = {

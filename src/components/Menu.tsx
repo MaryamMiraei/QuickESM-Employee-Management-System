@@ -154,6 +154,7 @@ const Menu = () => {
           <path d="M4 19h16"></path>
         </svg>
       </button>
+      
       {isOpen && (
         <div className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-40"></div>
       )}
