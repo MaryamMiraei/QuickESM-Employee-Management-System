@@ -90,3 +90,24 @@ type EmployeeFormData = Pick<
   | "phone"
   | "position"
 >;
+
+ interface ILeave {
+   id: string;
+   employeeId: string;
+   type: "Sick" | "Casual" | "Annual";
+   fromDate: string;
+   toDate: string;
+   reason: string;
+   status: string;
+   createdAt: string;
+   updatedAt: string;
+   year: number;
+   employee: {
+     id: string;
+     firstName: string;
+     lastName: string;
+     email: string;
+     department: string;
+     position: string;
+   } | null;
+ }
